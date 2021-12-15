@@ -1,97 +1,141 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import { Form, Input, Button, Checkbox,DatePicker } from 'antd';
-import { Divider } from 'antd';
+import { Typography,Divider } from 'antd';
+import './PersonalSettings.css';
+import moment from 'moment';
+import { Avatar, Tooltip } from 'antd';
+import { UserOutlined, AntDesignOutlined } from '@ant-design/icons';
 
-
+const { Title, Paragraph, Text, Link } = Typography;
 const PersonalSettings = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
 
-  function onChange(date, dateString) {
-    console.log(date, dateString);
+  const [personal,setPersonal] = useState({firstname:'daniel',lastname:'mamre',email:'danielmamre@gmail.com',birthday:'1992-09-03'});
+  const firstname = personal.firstname;
+  const lastname = personal.lastname;
+  const email = personal.email;
+  const birthday = personal.birthday;
+
+  useEffect (() => 
+  {
+     console.log(personal);
+  },[personal])
+
+  function updateFirstname (event)
+  {
+    setPersonal(prevPersonal=>{
+      return {...prevPersonal , firstname : event.target.value }
+    })
+  }
+  
+
+  function updateLastname ()
+  {
+    
+  }
+
+  function updateBirthday (date, dateString)
+  {
+    setPersonal(prevPersonal=>{
+      return {...prevPersonal , birthday : date }
+    })
   }
 
   return (
     <div style={{padding:'15px'}}>
-      <Divider/>
+      <Divider>Local</Divider>
     <Row>
-   <Form
-      name="basic"
-      labelCol={{
-        span: 8,
+    <Col span={6} className='col'> <Input value={firstname} addonBefore="Firstname"/></Col>
+      <Col span={6} className='col'> <Input value={lastname} addonBefore="Lastname"/></Col>
+      <Col span={6} className='col'> <Input value={email} addonBefore="Email "/></Col>
+      <Col span={6} className='col'> <DatePicker onChange={updateBirthday}  defaultValue={moment(birthday, 'YYYY-MM-DD')}addonBefore="Birthday"/></Col>
+   
+  </Row>
+  <Divider>About me</Divider>
+    
+  <Row>
+  <Typography>
+    <Title>Introduction</Title>
+    <Paragraph>
+     I'm an experienced software engineer who constantly seeks out innovative solutions to everyday problems.
+      In my five years in this industry, I've honed my analytical thinking and collaboration skills, and I love working with a team. I've also had the opportunity to serve as the software engineer lead for three projects with First Technology.
+    </Paragraph>
+    <Title level={2}>Skills</Title>
+    <Paragraph>
+      <ul>
+        <li>
+          <Link>C# Asp.core</Link>
+        </li>
+        <li>
+          <Link>Angular</Link>
+        </li>
+        <li>
+          <Link >Javascript</Link>
+        </li>
+        <li>
+          <Link >Node.js</Link>
+        </li>
+        <li>
+          <Link >Networking protocols (UDP,TCP,MODBUS,SNMP,FTP,OPC,HTTP,etc)</Link>
+        </li>
+        <li>
+          <Link >Linux , Windows, GCP</Link>
+        </li>
+      </ul>
+    </Paragraph>
+    <Title level={3}>My Squad</Title>
+    <Paragraph></Paragraph>
+    <Avatar.Group
+      maxCount={2}
+      size="large"
+      maxStyle={{
+        color: '#f56a00',
+        backgroundColor: '#fde3cf',
       }}
-      wrapperCol={{
-        span: 16,
-      }}
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
     >
-      <Form.Item
-        label="Firstname"
-        name="firstname"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your firstname!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="Lastname"
-        name="lastname"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your lastname!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-         label="Birthday"
-         name="birthday"
-         rules={[
-           {
-             required: true,
-             message: 'Please input your birthday!',
-           }]}
-      >
-       <DatePicker onChange={onChange} />
-      </Form.Item>
-
-
-      <Form.Item
-        wrapperCol={{
-          offset: 8,
-          span: 16,
+      <Avatar src="https://scontent.fsdv3-1.fna.fbcdn.net/v/t39.30808-6/241356868_4643833708962878_2012053507440258729_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=404gOkO2GYIAX-Ao1w5&_nc_ht=scontent.fsdv3-1.fna&oh=00_AT8cTDao6WJQJu-Nb7KK0n4PSFCwp8Lrd7OMwj8oRs_UiA&oe=61BC023A" />
+      <Avatar
+        style={{
+          backgroundColor: '#f56a00',
         }}
       >
-        {/* <Button type="primary" htmlType="submit">
-          Submit
-        </Button> */}
-      </Form.Item>
-    </Form>
-  </Row>
-  <Divider/>
-  <Row>
-  
+        GH
+      </Avatar>
+      <Avatar
+        style={{
+          backgroundColor: '#1890ff',
+        }}
+      >
+        RM
+      </Avatar>
+      <Avatar
+        style={{
+          backgroundColor: '#00abf5',
+        }}
+      >
+        SP
+      </Avatar>
+      <Avatar
+        style={{
+          backgroundColor: '#87d068',
+        }}
+      >
+        MB
+      </Avatar>
+      <Avatar
+        style={{
+          backgroundColor: '#e100f4',
+        }}
+      >
+        RT
+      </Avatar>
+    
+     
+    </Avatar.Group>
+    </Typography>
   </Row>
   </div>
   );
